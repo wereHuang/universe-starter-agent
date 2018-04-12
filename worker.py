@@ -75,6 +75,9 @@ def run(args, server):
     with sv.managed_session(server.target, config=config) as sess, sess.as_default():
         # load model
         saver.restore(sess, "saved_models/model.ckpt")
+        with tf.variable_scope("global"):
+            trainer.global_step.load(0, sess)
+
         sess.run(trainer.sync)
         trainer.start(sess, summary_writer)
         global_step = sess.run(trainer.global_step)

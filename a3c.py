@@ -273,9 +273,11 @@ server.
         should_compute_summary = self.task == 0 and self.local_steps % 11 == 0
 
         if should_compute_summary:
-            fetches = [self.summary_op, self.train_op, self.global_step]
+            # fetches = [self.summary_op, self.train_op, self.global_step]
+            fetches = [self.summary_op, self.global_step]
         else:
-            fetches = [self.train_op, self.global_step]
+            # fetches = [self.train_op, self.global_step]
+            fetches = [self.global_step]
 
         feed_dict = {
             self.local_network.x: batch.si,
